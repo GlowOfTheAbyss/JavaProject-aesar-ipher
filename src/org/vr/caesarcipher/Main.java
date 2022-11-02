@@ -9,6 +9,8 @@ public class Main {
 
         if (args.length > 0) {
             commandReader(args);
+        } else {
+            throw new IllegalArgumentException("Command not found");
         }
 
     }
@@ -17,11 +19,19 @@ public class Main {
         String command = args[0];
 
         if (command.equals("encode")) {
-            System.out.println("encode detected");
+
+            String filePatch = args[1];
+            int key = Integer.parseInt(args[2]);
+            Encoder.Encode(filePatch, key);
+
         } else if (command.equals("decode")) {
+
             System.out.println("decode detected");
+
         } else if (command.equals("bruteForce")) {
+
             System.out.println("bruteForce detected");
+
         } else {
             throw new IllegalArgumentException(String.format("Unknown command %s", command));
         }
