@@ -21,10 +21,10 @@ public class Encoder {
 
         Path sourcePath = Path.of(stringPath);
         String fileName = sourcePath.getFileName().toString();
-        String newFileName = sourcePath.getParent().toString() + "\\" + fileName.substring(0, fileName.indexOf('.')) + "(encoded).txt";
+        String newFileName = sourcePath.getParent().toString()
+                + "\\" + fileName.substring(0, fileName.indexOf('.'))
+                + "(encoded).txt";
         Path outPath = Path.of(newFileName);
-
-        System.out.println(outPath);
 
         try {
             byte[] inputText = Files.readAllBytes(sourcePath);
