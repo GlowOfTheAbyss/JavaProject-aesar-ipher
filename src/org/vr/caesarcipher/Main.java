@@ -18,19 +18,20 @@ public class Main {
 
         if (command.equals("encode")) {
 
-            Path filePatch = Path.of(args[1]);
+            Path sourcePatch = Path.of(args[1]);
             int key = Integer.parseInt(args[2]);
-            Encoder.Encode(command, filePatch, key);
+            Encoder.Encode(command, sourcePatch, key);
 
         } else if (command.equals("decode")) {
 
-            Path filePatch = Path.of(args[1]);
+            Path sourcePatch = Path.of(args[1]);
             int key = Integer.parseInt(args[2]);
-            Encoder.Decode(command, filePatch, key);
+            Encoder.Decode(command, sourcePatch, key);
 
         } else if (command.equals("bruteForce")) {
 
-            System.out.println("bruteForce detected");
+            Path sourcePatch = Path.of(args[1]);
+            Encoder.BruteForce(command, sourcePatch);
 
         } else {
             throw new IllegalArgumentException(String.format("Unknown command %s", command));
