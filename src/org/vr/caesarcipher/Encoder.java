@@ -17,14 +17,9 @@ public class Encoder {
         setAlphabet();
     }
 
-    public static void Encode(String stringPath, int key) {
+    public static void Encode(String command, Path sourcePath, int key) {
 
-        Path sourcePath = Path.of(stringPath);
-        String fileName = sourcePath.getFileName().toString();
-        String newFileName = sourcePath.getParent().toString()
-                + "\\" + fileName.substring(0, fileName.indexOf('.'))
-                + "(encoded).txt";
-        Path outPath = Path.of(newFileName);
+        Path outPath = generateOutPatch(sourcePath, command);
 
         try {
             byte[] inputText = Files.readAllBytes(sourcePath);
@@ -53,12 +48,36 @@ public class Encoder {
 
             }
 
+            assert outPath != null;
             Files.write(outPath, outputText);
 
         } catch (IOException exception) {
             exception.printStackTrace();
         }
 
+    }
+
+    public static void Decode(String command, Path sourcePath, int key) {
+
+        Encode(command, sourcePath, key * -1);
+
+    }
+
+    private static Path generateOutPatch(Path sourcePath, String command) {
+
+        String fileName = sourcePath.getFileName().toString();
+
+        if (command.equals("encode")) {
+            return Path.of(sourcePath.getParent().toString()
+                    + "\\" + fileName.substring(0, fileName.indexOf('.'))
+                    + "(encoded).txt");
+        } else if (command.equals("decode")) {
+            return Path.of(sourcePath.getParent().toString()
+                    + "\\" + fileName.substring(0, fileName.indexOf('.'))
+                    + "(decoded).txt");
+        }
+
+        return null;
     }
 
     private void setAlphabet() {
