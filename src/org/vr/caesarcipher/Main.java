@@ -31,7 +31,8 @@ public class Main {
         } else if (command.equals("bruteForce")) {
 
             Path sourcePatch = Path.of(args[1]);
-            Encoder.BruteForce(command, sourcePatch);
+            Path referencePatch = Path.of(args[2]);
+            Encoder.BruteForce(command, sourcePatch, referencePatch);
 
         } else {
             throw new IllegalArgumentException(String.format("Unknown command %s", command));
