@@ -1,6 +1,6 @@
 package org.vr.caesarcipher;
 
-import java.util.Arrays;
+import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,13 +18,15 @@ public class Main {
 
         if (command.equals("encode")) {
 
-            String filePatch = args[1];
+            Path filePatch = Path.of(args[1]);
             int key = Integer.parseInt(args[2]);
-            Encoder.Encode(filePatch, key);
+            Encoder.Encode(command, filePatch, key);
 
         } else if (command.equals("decode")) {
 
-            System.out.println("decode detected");
+            Path filePatch = Path.of(args[1]);
+            int key = Integer.parseInt(args[2]);
+            Encoder.Decode(command, filePatch, key);
 
         } else if (command.equals("bruteForce")) {
 
