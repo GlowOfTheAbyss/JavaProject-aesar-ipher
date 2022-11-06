@@ -1,4 +1,4 @@
-package org.glowoftheabyss.caesarcipher;
+package org.glow.caesarcipher;
 
 public class CommandReader {
 
@@ -11,14 +11,15 @@ public class CommandReader {
         errorsCheck(args);
 
         Encoder encoder = new Encoder();
+        PathGenerator pathGenerator = new PathGenerator();
         String command = args[0];
-        String sourcePatch = args[1];
+        String sourcePath = args[1];
         int key = Integer.parseInt(args[2]);
 
         if (ENCODE.equals(command)) {
-            encoder.Encode(command, sourcePatch, key);
+            encoder.Encode(sourcePath, key, pathGenerator.makeOutPathEncode(sourcePath));
         } else if (DECODE.equals(command)) {
-            // decode
+            encoder.Decode(sourcePath, key, pathGenerator.makeOutPathDecode(sourcePath));
         } else if (BRUTE_FORCE.equals(command)) {
             // brute force
         }
