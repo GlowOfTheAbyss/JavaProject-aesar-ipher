@@ -1,4 +1,4 @@
-package org.glowoftheabyss.caesarcipher;
+package org.glow.caesarcipher;
 
 public class Main {
     public static void main(String[] args) {
