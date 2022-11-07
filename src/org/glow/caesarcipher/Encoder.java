@@ -14,8 +14,8 @@ public class Encoder {
         setAlphabet();
     }
 
-    public void Encode(String sourcePatch, int key, Path outPath) {
-        Path sourcePath = Path.of(sourcePatch);
+    public void Encode(String sourceStringPath, int key, Path outPath) {
+        Path sourcePath = Path.of(sourceStringPath);
 
         try {
 
@@ -54,8 +54,30 @@ public class Encoder {
 
     }
 
-    public void Decode(String sourcePatch, int key, Path outPath) {
-        Encode(sourcePatch, key * - 1, outPath);
+    public void Decode(String sourcePath, int key, Path outPath) {
+        Encode(sourcePath, key * - 1, outPath);
+    }
+
+    public void BruteForce(String sourceStringPath, String referenceStringPath) {
+
+        Path sourcePath = Path.of(sourceStringPath);
+        Path referencePath = Path.of(referenceStringPath);
+        PathGenerator pathGenerator = new PathGenerator();
+
+        try {
+
+            byte[] referenceText = Files.readAllBytes(referencePath);
+            byte[] sourceText = Files.readAllBytes(sourcePath);
+
+            CryptoAnalyzer cryptanalyzer = new CryptoAnalyzer();
+            int key = cryptanalyzer.findKey(referenceText, sourceText);
+
+            Path outPath = pathGenerator.makeOutPathBruteForce(sourceStringPath, key);
+            Decode(sourceStringPath, key, outPath);
+
+        } catch (IOException exception) {
+            throw new IllegalArgumentException("Invalid file or reference path");
+        }
     }
 
     private void setAlphabet() {
