@@ -23,7 +23,7 @@ public class CommandReader {
             encoder.Decode(sourcePath, key, pathGenerator.makeOutPathDecode(sourcePath));
         } else if (BRUTE_FORCE.equals(command)) {
             String referencePath = args[2];
-            encoder.BruteForce(sourcePath, referencePath, pathGenerator.makeOutPathDecode(sourcePath));
+            encoder.BruteForce(sourcePath, referencePath, pathGenerator.makeOutPathBruteForce(sourcePath));
         }
 
     }
