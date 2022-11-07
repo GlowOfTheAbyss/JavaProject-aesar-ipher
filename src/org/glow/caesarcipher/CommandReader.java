@@ -14,14 +14,16 @@ public class CommandReader {
         PathGenerator pathGenerator = new PathGenerator();
         String command = args[0];
         String sourcePath = args[1];
-        int key = Integer.parseInt(args[2]);
 
         if (ENCODE.equals(command)) {
+            int key = Integer.parseInt(args[2]);
             encoder.Encode(sourcePath, key, pathGenerator.makeOutPathEncode(sourcePath));
         } else if (DECODE.equals(command)) {
+            int key = Integer.parseInt(args[2]);
             encoder.Decode(sourcePath, key, pathGenerator.makeOutPathDecode(sourcePath));
         } else if (BRUTE_FORCE.equals(command)) {
-            // brute force
+            String referencePath = args[2];
+            encoder.BruteForce(sourcePath, referencePath, pathGenerator.makeOutPathDecode(sourcePath));
         }
 
     }
