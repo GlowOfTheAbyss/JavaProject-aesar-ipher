@@ -69,8 +69,8 @@ public class Encoder {
             byte[] referenceText = Files.readAllBytes(referencePath);
             byte[] sourceText = Files.readAllBytes(sourcePath);
 
-            CryptoAnalyzer cryptanalyzer = new CryptoAnalyzer();
-            int key = cryptanalyzer.findKey(referenceText, sourceText);
+            CryptoAnalyzer cryptoAnalyzer = new CryptoAnalyzer();
+            int key = cryptoAnalyzer.findKey(referenceText, sourceText);
 
             Path outPath = pathGenerator.makeOutPathBruteForce(sourceStringPath, key);
             Decode(sourceStringPath, key, outPath);
