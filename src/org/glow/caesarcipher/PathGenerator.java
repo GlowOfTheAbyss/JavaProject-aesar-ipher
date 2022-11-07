@@ -20,4 +20,12 @@ public class PathGenerator {
         return Path.of(sb.toString());
     }
 
+    public Path makeOutPathBruteForce (String sourcePath) {
+
+        StringBuilder sb = new StringBuilder(sourcePath);
+        sb.insert(sourcePath.length() - 4, "(Brute Force)");
+
+        return Path.of(sb.toString());
+    }
+
 }
