@@ -20,32 +20,7 @@ public class Encoder {
         try {
 
             byte[] inputText = Files.readAllBytes(sourcePath);
-
-            List<Character> encryptedAlphabetLowerCase = applyKeyToAlphabet(ALPHABET_LOWER_CASE, key);
-            List<Character> encryptedAlphabetUpperCase = applyKeyToAlphabet(ALPHABET_UPPER_CASE, key);
-
-            byte[] outputText = new byte[inputText.length];
-
-            for (int i = 0; i < inputText.length; i++) {
-
-                if (encryptedAlphabetLowerCase.contains((char)inputText[i])) {
-
-                    int letterIndex = ALPHABET_LOWER_CASE.indexOf((char)inputText[i]);
-                    outputText[i] = (byte)encryptedAlphabetLowerCase.get(letterIndex).charValue();
-
-                } else if (encryptedAlphabetUpperCase.contains((char)inputText[i])) {
-
-                    int letterIndex = ALPHABET_UPPER_CASE.indexOf((char)inputText[i]);
-                    outputText[i] = (byte)encryptedAlphabetUpperCase.get(letterIndex).charValue();
-
-                } else {
-
-                    outputText[i] = inputText[i];
-
-                }
-
-            }
-
+            byte[] outputText = EncryptText(inputText, key);
             Files.write(outPath, outputText);
 
         } catch (IOException exception) {
@@ -78,6 +53,36 @@ public class Encoder {
         } catch (IOException exception) {
             throw new IllegalArgumentException("Invalid file or reference path");
         }
+    }
+
+    private byte[] EncryptText(byte[] inputText, int key) {
+
+        List<Character> encryptedAlphabetLowerCase = applyKeyToAlphabet(ALPHABET_LOWER_CASE, key);
+        List<Character> encryptedAlphabetUpperCase = applyKeyToAlphabet(ALPHABET_UPPER_CASE, key);
+
+        byte[] outputText = new byte[inputText.length];
+
+        for (int i = 0; i < inputText.length; i++) {
+
+            if (encryptedAlphabetLowerCase.contains((char)inputText[i])) {
+
+                int letterIndex = ALPHABET_LOWER_CASE.indexOf((char)inputText[i]);
+                outputText[i] = (byte)encryptedAlphabetLowerCase.get(letterIndex).charValue();
+
+            } else if (encryptedAlphabetUpperCase.contains((char)inputText[i])) {
+
+                int letterIndex = ALPHABET_UPPER_CASE.indexOf((char)inputText[i]);
+                outputText[i] = (byte)encryptedAlphabetUpperCase.get(letterIndex).charValue();
+
+            } else {
+
+                outputText[i] = inputText[i];
+
+            }
+
+        }
+
+        return outputText;
     }
 
     private void setAlphabet() {
