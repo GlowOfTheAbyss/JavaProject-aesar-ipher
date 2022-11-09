@@ -6,7 +6,7 @@ public class CommandReader {
     private static final String DECODE = "decode";
     private static final String BRUTE_FORCE = "bruteForce";
 
-    public void Read (String[] args) {
+    public void read(String[] args) {
 
         errorsCheck(args);
 
@@ -17,13 +17,13 @@ public class CommandReader {
 
         if (ENCODE.equals(command)) {
             int key = Integer.parseInt(args[2]);
-            encoder.Encode(sourcePath, key, pathGenerator.makeOutPathEncode(sourcePath));
+            encoder.encode(sourcePath, key, pathGenerator.makeOutPathEncode(sourcePath));
         } else if (DECODE.equals(command)) {
             int key = Integer.parseInt(args[2]);
-            encoder.Decode(sourcePath, key, pathGenerator.makeOutPathDecode(sourcePath));
+            encoder.decode(sourcePath, key, pathGenerator.makeOutPathDecode(sourcePath));
         } else if (BRUTE_FORCE.equals(command)) {
             String referencePath = args[2];
-            encoder.BruteForce(sourcePath, referencePath);
+            encoder.bruteForce(sourcePath, referencePath);
         }
 
     }

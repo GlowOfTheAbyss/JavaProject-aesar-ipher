@@ -9,13 +9,18 @@ public class CryptoAnalyzer {
 
     public int findKey (byte[] referenceText, byte[] sourceText) {
 
-        List<Character> alphabet = new ArrayList<>();
-        for (int i = 'a'; i <= 'z'; i++) {
-            alphabet.add((char)i);
+        Encoder encoder = new Encoder();
+        String languageReference = encoder.identifyLanguageOfText(referenceText);
+        String languageSource = encoder.identifyLanguageOfText(sourceText);
+
+        if (!languageReference.equals(languageSource)) {
+            throw new IllegalArgumentException("texts have a different language!");
         }
 
-        int[] referenceLetterCount = LetterCount(referenceText, alphabet);
-        int[] sourceLetterCount = LetterCount(sourceText, alphabet);
+        List<Character> alphabet = encoder.setAlphabetLower(languageSource);
+
+        int[] referenceLetterCount = letterCount(referenceText, alphabet);
+        int[] sourceLetterCount = letterCount(sourceText, alphabet);
 
         List<Integer> sourceLetterCountList = new ArrayList<>(Arrays.stream(sourceLetterCount).boxed().toList());
         List<Integer> valuesDifference = new ArrayList<>();
@@ -34,29 +39,29 @@ public class CryptoAnalyzer {
         }
 
         int key = alphabet.get(valuesDifference.indexOf(Collections.min(valuesDifference)));
-        return key - 'a';
+        return key - alphabet.get(0);
 
     }
 
-    private int[] LetterCount(byte[] letters, List<Character> alphabet) {
+    private int[] letterCount(byte[] letters, List<Character> alphabet) {
 
         int[] letterCount = new int[alphabet.size()];
 
-        for (int i = 0; i < letters.length; i++) {
+        for (byte character : letters) {
 
-            char letter = Character.toLowerCase((char) letters[i]);
+            char letter = Character.toLowerCase((char) character);
             if (alphabet.contains(letter)) {
                 letterCount[alphabet.indexOf(letter)] += 1;
             }
 
         }
 
-        Normalize(letterCount);
+        normalize(letterCount);
 
         return letterCount;
     }
 
-    private void Normalize(int[] lettersCount) {
+    private void normalize(int[] lettersCount) {
 
         int maxValue = Collections.max(Arrays.stream(lettersCount).boxed().toList());
         for (int i = 0; i < lettersCount.length; i++) {
