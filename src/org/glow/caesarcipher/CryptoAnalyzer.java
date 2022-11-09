@@ -1,5 +1,6 @@
 package org.glow.caesarcipher;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class CryptoAnalyzer {
 
-    public int findKey (byte[] referenceText, byte[] sourceText) {
+    public int findKey (String referenceText, String sourceText) {
 
         Encoder encoder = new Encoder();
         String languageReference = encoder.identifyLanguageOfText(referenceText);
@@ -19,8 +20,8 @@ public class CryptoAnalyzer {
 
         List<Character> alphabet = encoder.setAlphabetLower(languageSource);
 
-        int[] referenceLetterCount = letterCount(referenceText, alphabet);
-        int[] sourceLetterCount = letterCount(sourceText, alphabet);
+        int[] referenceLetterCount = letterCount(referenceText.getBytes(StandardCharsets.UTF_8), alphabet);
+        int[] sourceLetterCount = letterCount(sourceText.getBytes(), alphabet);
 
         List<Integer> sourceLetterCountList = new ArrayList<>(Arrays.stream(sourceLetterCount).boxed().toList());
         List<Integer> valuesDifference = new ArrayList<>();

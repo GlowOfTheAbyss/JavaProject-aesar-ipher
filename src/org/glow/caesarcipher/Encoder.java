@@ -1,6 +1,7 @@
 package org.glow.caesarcipher;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -15,9 +16,9 @@ public class Encoder {
 
         try {
 
-            byte[] inputText = Files.readAllBytes(sourcePath);
-            byte[] outputText = encryptText(inputText, key);
-            Files.write(outPath, outputText);
+            String inputText = Files.readString(sourcePath);
+            String outputText = encryptText(inputText, key);
+            Files.writeString(outPath, outputText);
 
         } catch (IOException exception) {
             throw new IllegalArgumentException("Invalid file path");
@@ -37,8 +38,8 @@ public class Encoder {
 
         try {
 
-            byte[] referenceText = Files.readAllBytes(referencePath);
-            byte[] sourceText = Files.readAllBytes(sourcePath);
+            String referenceText = Files.readString(referencePath);
+            String sourceText = Files.readString(sourcePath);
 
             CryptoAnalyzer cryptoAnalyzer = new CryptoAnalyzer();
             int key = cryptoAnalyzer.findKey(referenceText, sourceText);
@@ -51,10 +52,9 @@ public class Encoder {
         }
     }
 
-    private byte[] encryptText(byte[] inputText, int key) {
+    private String encryptText(String inputText, int key) {
 
         String language = identifyLanguageOfText(inputText);
-        System.out.println(language);
 
         List<Character> alphabetLowerCase = setAlphabetLower(language);
         List<Character> alphabetUpperCase = setAlphabetUpper(language);
@@ -62,32 +62,32 @@ public class Encoder {
         List<Character> encryptedAlphabetLowerCase = applyKeyToAlphabet(alphabetLowerCase, key);
         List<Character> encryptedAlphabetUpperCase = applyKeyToAlphabet(alphabetUpperCase, key);
 
-        byte[] outputText = new byte[inputText.length];
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < inputText.length; i++) {
+        for (int i = 0; i < inputText.length(); i++) {
 
-            if (encryptedAlphabetLowerCase.contains((char)inputText[i])) {
+            if (encryptedAlphabetLowerCase.contains(inputText.toCharArray()[i])) {
 
-                int letterIndex = alphabetLowerCase.indexOf((char)inputText[i]);
-                outputText[i] = (byte)encryptedAlphabetLowerCase.get(letterIndex).charValue();
+                int letterIndex = alphabetLowerCase.indexOf(inputText.toCharArray()[i]);
+                sb.append(encryptedAlphabetLowerCase.get(letterIndex).charValue());
 
-            } else if (encryptedAlphabetUpperCase.contains((char)inputText[i])) {
+            } else if (encryptedAlphabetUpperCase.contains(inputText.toCharArray()[i])) {
 
-                int letterIndex = alphabetUpperCase.indexOf((char)inputText[i]);
-                outputText[i] = (byte)encryptedAlphabetUpperCase.get(letterIndex).charValue();
+                int letterIndex = alphabetUpperCase.indexOf(inputText.toCharArray()[i]);
+                sb.append(encryptedAlphabetUpperCase.get(letterIndex).charValue());
 
             } else {
 
-                outputText[i] = inputText[i];
+                sb.append(inputText.toCharArray()[i]);
 
             }
 
         }
 
-        return outputText;
+        return sb.toString();
     }
 
-    public String identifyLanguageOfText (byte[] inputText) {
+    public String identifyLanguageOfText (String inputText) {
 
         List<Character> alphabetENG = setAlphabetLower(ENGLISH);
         List<Character> alphabetRU = setAlphabetLower(RUSSIAN);
@@ -95,9 +95,9 @@ public class Encoder {
         int countENG = 0;
         int countRU = 0;
 
-        for (byte character : inputText) {
+        for (char character : inputText.toCharArray()) {
 
-            Character letter = (char) Character.toLowerCase(character);
+            Character letter = Character.toLowerCase(character);
 
             if (alphabetENG.contains(letter)) {
                 countENG++;
@@ -107,8 +107,6 @@ public class Encoder {
             }
 
         }
-        System.out.println(countENG);
-        System.out.println(countRU);
         if (countENG > countRU) {
             return ENGLISH;
         } else if (countRU > countENG) {
