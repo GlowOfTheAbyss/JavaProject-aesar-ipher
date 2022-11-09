@@ -20,8 +20,8 @@ public class CryptoAnalyzer {
 
         List<Character> alphabet = encoder.setAlphabetLower(languageSource);
 
-        int[] referenceLetterCount = letterCount(referenceText.getBytes(StandardCharsets.UTF_8), alphabet);
-        int[] sourceLetterCount = letterCount(sourceText.getBytes(), alphabet);
+        int[] referenceLetterCount = letterCount(referenceText, alphabet);
+        int[] sourceLetterCount = letterCount(sourceText, alphabet);
 
         List<Integer> sourceLetterCountList = new ArrayList<>(Arrays.stream(sourceLetterCount).boxed().toList());
         List<Integer> valuesDifference = new ArrayList<>();
@@ -39,18 +39,17 @@ public class CryptoAnalyzer {
 
         }
 
-        int key = alphabet.get(valuesDifference.indexOf(Collections.min(valuesDifference)));
-        return key - alphabet.get(0);
+        return valuesDifference.indexOf(Collections.min(valuesDifference));
 
     }
 
-    private int[] letterCount(byte[] letters, List<Character> alphabet) {
+    private int[] letterCount(String letters, List<Character> alphabet) {
 
         int[] letterCount = new int[alphabet.size()];
 
-        for (byte character : letters) {
+        for (char character : letters.toCharArray()) {
 
-            char letter = Character.toLowerCase((char) character);
+            char letter = Character.toLowerCase(character);
             if (alphabet.contains(letter)) {
                 letterCount[alphabet.indexOf(letter)] += 1;
             }
