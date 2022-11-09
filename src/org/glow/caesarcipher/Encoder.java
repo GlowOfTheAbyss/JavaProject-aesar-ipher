@@ -111,7 +111,7 @@ public class Encoder {
         } else if (countRU > countENG) {
             return RUSSIAN;
         } else {
-            throw new IllegalArgumentException("unknown text language!");
+            throw new IllegalArgumentException("Unknown text language");
         }
 
     }
@@ -136,7 +136,7 @@ public class Encoder {
             }
 
         } else {
-            throw new IllegalArgumentException("unknown language");
+            throw new IllegalArgumentException("Unknown language");
         }
 
         return alphabet;
@@ -162,7 +162,7 @@ public class Encoder {
             }
 
         } else {
-            throw new IllegalArgumentException("unknown language");
+            throw new IllegalArgumentException("Unknown language");
         }
 
         return alphabet;

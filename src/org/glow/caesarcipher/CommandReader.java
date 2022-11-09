@@ -39,11 +39,11 @@ public class CommandReader {
                 && !(BRUTE_FORCE.equals(args[0]))) {
             throw new IllegalArgumentException(String.format("Unknown command %s", args[0]));
         } else if (args.length < 2) {
-            throw new IllegalArgumentException("Patch to file not found!");
+            throw new IllegalArgumentException("Patch to file not found");
         } else if (args.length < 3 && BRUTE_FORCE.equals(args[0])) {
-            throw new IllegalArgumentException("Patch to reference text not found!");
+            throw new IllegalArgumentException("Patch to reference text not found");
         } else if (args.length < 3) {
-            throw new IllegalArgumentException("Key not found!");
+            throw new IllegalArgumentException("Key not found");
         }
 
     }

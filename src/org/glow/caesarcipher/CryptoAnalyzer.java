@@ -14,7 +14,7 @@ public class CryptoAnalyzer {
         String languageSource = encoder.identifyLanguageOfText(sourceText);
 
         if (!languageReference.equals(languageSource)) {
-            throw new IllegalArgumentException("texts have a different language!");
+            throw new IllegalArgumentException("Texts have a different language");
         }
 
         List<Character> alphabet = encoder.setAlphabetLower(languageSource);
