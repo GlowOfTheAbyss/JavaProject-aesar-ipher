@@ -55,8 +55,8 @@ public class Encoder {
 
         String language = identifyLanguageOfText(inputText);
 
-        List<Character> alphabetLowerCase = setAlphabetLower(language);
-        List<Character> alphabetUpperCase = setAlphabetUpper(language);
+        List<Character> alphabetLowerCase = createAlphabetLower(language);
+        List<Character> alphabetUpperCase = createAlphabetUpper(language);
 
         List<Character> encryptedAlphabetLowerCase = applyKeyToAlphabet(alphabetLowerCase, key);
         List<Character> encryptedAlphabetUpperCase = applyKeyToAlphabet(alphabetUpperCase, key);
@@ -88,8 +88,8 @@ public class Encoder {
 
     public String identifyLanguageOfText (String inputText) {
 
-        List<Character> alphabetENG = setAlphabetLower(ENGLISH);
-        List<Character> alphabetRU = setAlphabetLower(RUSSIAN);
+        List<Character> alphabetENG = createAlphabetLower(ENGLISH);
+        List<Character> alphabetRU = createAlphabetLower(RUSSIAN);
 
         int countENG = 0;
         int countRU = 0;
@@ -116,7 +116,7 @@ public class Encoder {
 
     }
 
-    public List<Character> setAlphabetLower(String language) {
+    public List<Character> createAlphabetLower(String language) {
 
         List<Character> alphabet = new ArrayList<>();
 
@@ -142,7 +142,7 @@ public class Encoder {
         return alphabet;
     }
 
-    private List<Character> setAlphabetUpper(String language) {
+    private List<Character> createAlphabetUpper(String language) {
 
         List<Character> alphabet = new ArrayList<>();
 

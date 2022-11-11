@@ -17,7 +17,7 @@ public class CryptoAnalyzer {
             throw new IllegalArgumentException("Texts have a different language");
         }
 
-        List<Character> alphabet = encoder.setAlphabetLower(languageSource);
+        List<Character> alphabet = encoder.createAlphabetLower(languageSource);
 
         int[] referenceLetterCount = letterCount(referenceText, alphabet);
         int[] sourceLetterCount = letterCount(sourceText, alphabet);
