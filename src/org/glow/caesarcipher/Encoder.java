@@ -63,25 +63,26 @@ public class Encoder {
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < inputText.length(); i++) {
+        for (char symbol : inputText.toCharArray()) {
 
-            if (encryptedAlphabetLowerCase.contains(inputText.toCharArray()[i])) {
+            if (encryptedAlphabetLowerCase.contains(symbol)) {
 
-                int letterIndex = alphabetLowerCase.indexOf(inputText.toCharArray()[i]);
+                int letterIndex = alphabetLowerCase.indexOf(symbol);
                 sb.append(encryptedAlphabetLowerCase.get(letterIndex).charValue());
 
-            } else if (encryptedAlphabetUpperCase.contains(inputText.toCharArray()[i])) {
+            } else if (encryptedAlphabetUpperCase.contains(symbol)) {
 
-                int letterIndex = alphabetUpperCase.indexOf(inputText.toCharArray()[i]);
+                int letterIndex = alphabetUpperCase.indexOf(symbol);
                 sb.append(encryptedAlphabetUpperCase.get(letterIndex).charValue());
 
             } else {
 
-                sb.append(inputText.toCharArray()[i]);
+                sb.append(symbol);
 
             }
 
         }
+
 
         return sb.toString();
     }
